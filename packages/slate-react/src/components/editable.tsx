@@ -142,14 +142,26 @@ export const Editable = (props: EditableProps) => {
       return
     }
 
-    const newDomRange = selection && ReactEditor.toDOMRange(editor, selection)
-
     // If the DOM selection is already correct, we're done.
-    if (
-      hasDomSelection &&
-      newDomRange &&
-      isRangeEqual(domSelection.getRangeAt(0), newDomRange)
-    ) {
+    let newDomRange = null;
+    try {
+      newDomRange = selection && ReactEditor.toDOMRange(editor, selection)
+
+      // If the DOM selection is already correct, we're done.
+      if (hasDomSelection) {
+        const newEditorRange = ReactEditor.toSlateRange(
+          editor,
+          domSelection.getRangeAt(0)
+        )
+        if (
+          selection &&
+          newEditorRange &&
+          Range.equals(selection, newEditorRange)
+        ) {
+          return
+        }
+      }
+    } catch (e) {
       return
     }
 
@@ -929,22 +941,22 @@ export const Editable = (props: EditableProps) => {
 
 const defaultDecorate = () => []
 
-/**
- * Check if two DOM range objects are equal.
- */
+// /**
+//  * Check if two DOM range objects are equal.
+//  */
 
-const isRangeEqual = (a: DOMRange, b: DOMRange) => {
-  return (
-    (a.startContainer === b.startContainer &&
-      a.startOffset === b.startOffset &&
-      a.endContainer === b.endContainer &&
-      a.endOffset === b.endOffset) ||
-    (a.startContainer === b.endContainer &&
-      a.startOffset === b.endOffset &&
-      a.endContainer === b.startContainer &&
-      a.endOffset === b.startOffset)
-  )
-}
+// const isRangeEqual = (a: DOMRange, b: DOMRange) => {
+//   return (
+//     (a.startContainer === b.startContainer &&
+//       a.startOffset === b.startOffset &&
+//       a.endContainer === b.endContainer &&
+//       a.endOffset === b.endOffset) ||
+//     (a.startContainer === b.endContainer &&
+//       a.startOffset === b.endOffset &&
+//       a.endContainer === b.startContainer &&
+//       a.endOffset === b.startOffset)
+//   )
+// }
 
 /**
  * Check if the target is in the editor.
