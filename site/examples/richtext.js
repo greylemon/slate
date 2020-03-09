@@ -24,10 +24,7 @@ const RichTextExample = () => {
 
   return (
     <div>
-      <Slate editor={editor} value={value} onChange={value => {
-        setValue(value);
-      }
-      }>
+      <Slate editor={editor} value={value} onChange={value => setValue(value)}>
         <Toolbar>
           <MarkButton format="bold" icon="format_bold" />
           <MarkButton format="italic" icon="format_italic" />
@@ -55,9 +52,7 @@ const RichTextExample = () => {
           }}
         />
       </Slate>
-      <Slate editor={editor2} value={value} onChange={(value) => {
-        setValue(value);}
-      }>
+      <Slate editor={editor2} value={value} onChange={value => setValue(value)}>
         <Toolbar>
           <MarkButton format="bold" icon="format_bold" />
           <MarkButton format="italic" icon="format_italic" />
