@@ -23,7 +23,7 @@
     "test": "mocha --require ./config/babel/register.cjs ./packages/*/test/index.js",
     "test:inspect": "yarn test --inspect-brk",
     "watch": "yarn build:rollup --watch",
-    "preinstall": "yarn build:rollup"
+    "postinstall": "yarn build:rollup"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
